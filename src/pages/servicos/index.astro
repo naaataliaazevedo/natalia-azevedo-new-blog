@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const services = [
+  {
+    name: 'automacoes-n8n/',
+    desc: 'Workflows de automação sob medida: integrações entre sistemas, notificações, geração de relatórios, pipelines com IA.',
+  },
+  {
+    name: 'landing-pages/',
+    desc: 'Páginas de captura e apresentação de produto, rápidas e com foco em conversão.',
+  },
+  {
+    name: 'desenvolvimento-sob-demanda/',
+    desc: 'Frontend e integrações pontuais para times que precisam de reforço especializado por um período definido.',
+  },
+  {
+    name: 'mentoria/',
+    desc: 'Mentoria individual para devs (carreira, arquitetura, transição pra sênior) ou para empresas que precisam de apoio técnico pontual em decisões de frontend e microfrontends.',
+  },
+];
+---
+<BaseLayout
+  title="Serviços"
+  description="Serviços da software house: automações em N8N, landing pages e desenvolvimento sob demanda."
+>
+  <p class="prompt">ls servicos/</p>
+  <div class="services">
+    {services.map((s) => (
+      <div class="service">
+        <p class="service-name">{s.name}</p>
+        <p class="service-desc">{s.desc}</p>
+      </div>
+    ))}
+  </div>
+
+  <p class="prompt cta-prompt">./contratar.sh</p>
+  <p>
+    Me chama em
+    <a href="mailto:contato@natazevedo.com.br"> contato@natazevedo.com.br </a>
+    contando o que você precisa.
+    <p>
+      <a href="https://www.linkedin.com/in/natalia-deazevedo" target="_blank" rel="noopener noreferrer">linkedin.com/in/natalia-deazevedo</a>
+    </p>
+  </p>
+</BaseLayout>
+
+<style>
+  .prompt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin: 0 0 1.2rem;
+  }
+  .cta-prompt { margin-top: 3rem; }
+  .services { border-top: 1px solid var(--border); }
+  .service {
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .service-name {
+    font-family: var(--font-display);
+    color: var(--amber);
+    margin: 0 0 0.35rem;
+  }
+  .service-desc { color: var(--text-dim); margin: 0; max-width: 62ch; font-size: 0.95rem; }
+</style>

@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="pt-BR" data-astro-cid-z4jru4n3><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Defendendo o mf-core: o shell de microfrontends não era óbvio pra todo mundo · natazevedo</title><meta name="description" content="Como argumentei a favor do mf-core como host de Module Federation contra a resistência do time, até alinhar com o CTO — e o que virou fitness function depois disso."><meta property="og:title" content="Defendendo o mf-core: o shell de microfrontends não era óbvio pra todo mundo"><meta property="og:description" content="Como argumentei a favor do mf-core como host de Module Federation contra a resistência do time, até alinhar com o CTO — e o que virou fitness function depois disso."><meta property="og:type" content="website"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/_astro/BaseLayout.CKBxfJJy.css"><style>.prompt[data-astro-cid-4flseyhv]{font-family:var(--font-display);margin:0 0 1.2rem;font-weight:700}.post-head[data-astro-cid-4flseyhv]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.4rem}.meta[data-astro-cid-4flseyhv]{color:var(--text-faint);flex-wrap:wrap;align-items:center;gap:1rem;margin:0;font-size:.86rem;display:flex}.tags[data-astro-cid-4flseyhv]{gap:.8rem;display:flex}.tag[data-astro-cid-4flseyhv]{color:var(--teal)}.content[data-astro-cid-4flseyhv] h2{border-top:1px solid var(--border);padding-top:1.6em}.content[data-astro-cid-4flseyhv] a{color:var(--teal)}.content[data-astro-cid-4flseyhv] ul,.content[data-astro-cid-4flseyhv] ol{max-width:var(--measure)}.back[data-astro-cid-4flseyhv]{margin-top:3rem}.back[data-astro-cid-4flseyhv] a[data-astro-cid-4flseyhv]{color:var(--text-dim);font-family:var(--font-display);text-decoration:none}.back[data-astro-cid-4flseyhv] a[data-astro-cid-4flseyhv]:hover{color:var(--amber)}
+</style></head><body data-astro-cid-z4jru4n3><header class="site-header" data-astro-cid-z4jru4n3><div class="wrap header-inner" data-astro-cid-z4jru4n3><a href="/" class="brand" data-astro-cid-z4jru4n3>natazevedo<span class="cursor" aria-hidden="true" data-astro-cid-z4jru4n3></span></a><nav aria-label="Navegação principal" data-astro-cid-z4jru4n3><ul data-astro-cid-z4jru4n3><li data-astro-cid-z4jru4n3><a href="/" data-astro-cid-z4jru4n3>home</a></li><li data-astro-cid-z4jru4n3><a href="/blog/" data-astro-cid-z4jru4n3>posts</a></li><li data-astro-cid-z4jru4n3><a href="/servicos/" data-astro-cid-z4jru4n3>servicos</a></li><li data-astro-cid-z4jru4n3><a href="/sobre/" data-astro-cid-z4jru4n3>sobre</a></li></ul></nav></div></header><main class="wrap" data-astro-cid-z4jru4n3><article data-astro-cid-4flseyhv><p class="prompt" data-astro-cid-4flseyhv>cat defendendo-o-mf-core.md</p><header class="post-head" data-astro-cid-4flseyhv><h1 data-astro-cid-4flseyhv>Defendendo o mf-core: o shell de microfrontends não era óbvio pra todo mundo</h1><p class="meta" data-astro-cid-4flseyhv><time datetime="2026-09-13T00:00:00.000Z" data-astro-cid-4flseyhv>12 de setembro de 2026</time><span class="tags" data-astro-cid-4flseyhv><span class="tag" data-astro-cid-4flseyhv>#mfe</span><span class="tag" data-astro-cid-4flseyhv>#arquitetura</span><span class="tag" data-astro-cid-4flseyhv>#frontend</span></span></p></header><div class="content" data-astro-cid-4flseyhv><p>Quando comecei a puxar a migração de legado pra microfrontends, a primeira
+decisão que precisei defender não foi técnica de verdade — foi política.
+A proposta era simples no papel: ter um <code>mf-core</code> como shell, responsável
+por orquestrar o Module Federation e expor os contratos que os
+microfrontends filhos consumiriam. Na prática, teve resistência — inclusive
+do Head de Tech.</p>
+<h2 id="o-argumento-contra">O argumento contra</h2>
+<p>A objeção mais forte era previsível: “mais uma camada é mais complexidade,
+mais um ponto de falha, mais um lugar pra debugar quando algo quebra”.
+Não é um argumento errado — é o argumento certo pra qualquer decisão de
+arquitetura que adiciona uma peça nova. O trabalho não era descartar essa
+preocupação, era mostrar o que ela ignorava: sem um host formal, cada time
+acaba reinventando sua própria forma de consumir os módulos remotos, e
+você troca uma complexidade explícita por várias implícitas, espalhadas
+e sem dono.</p>
+<h2 id="como-cheguei-no-alinhamento">Como cheguei no alinhamento</h2>
+<p>Não foi um documento de arquitetura que resolveu — foi mostrar o caminho
+inverso: o que acontece daqui a um ano sem o shell. Múltiplos times
+resolvendo o mesmo problema de formas diferentes, sem contrato comum entre
+os remotes, sem lugar único pra aplicar regras de compatibilidade. Levar
+essa discussão até o CTO ajudou a tirar a decisão do campo de opinião de
+time e colocar no campo de risco de produto.</p>
+<h2 id="o-que-virou-prática-depois">O que virou prática depois</h2>
+<p>Depois do alinhamento, a parte mais interessante não foi o shell em si —
+foi o que ele possibilitou em termos de <em>fitness functions</em> pra manter a
+arquitetura íntegra com o tempo:</p>
+<ul>
+<li><strong>Limite de bundle size</strong> para o shell e para cada MFE filho</li>
+<li><strong>Regras de <code>dependency-cruiser</code></strong> pra evitar acoplamento indevido entre módulos</li>
+<li><strong>Compatibilidade de schema GraphQL</strong> entre o BFF e os consumidores</li>
+<li><strong>Checagens bloqueantes em CI/PR</strong>, pra essas regras não dependerem de review manual</li>
+</ul>
+<p>Nenhuma dessas coisas faz sentido sem um host central pra aplicá-las. O
+shell não é só um detalhe técnico — é o lugar onde a arquitetura vira
+regra executável, em vez de documentação que ninguém lê.</p>
+<h2 id="o-que-eu-levo-disso">O que eu levo disso</h2>
+<p>A parte técnica da decisão levou uma tarde pra desenhar. Convencer o time
+levou semanas. Da próxima vez, tentaria trazer o “e se não fizermos isso”
+pra mesa desde a primeira conversa, em vez de deixar pra usar como último
+argumento.</p>
+</div></article><p class="back" data-astro-cid-4flseyhv><a href="/blog/" data-astro-cid-4flseyhv>cd ..</a></p></main><footer class="site-footer" data-astro-cid-z4jru4n3><div class="wrap" data-astro-cid-z4jru4n3><p class="prompt" data-astro-cid-z4jru4n3>exit <span class="text-faint" data-astro-cid-z4jru4n3>— Natália Azevedo, 2026</span></p></div></footer></body></html>

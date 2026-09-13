@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="pt-BR" data-astro-cid-z4jru4n3><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Versionando um Design System em escala sem travar os times · natazevedo</title><meta name="description" content="Como manter duas versões de um Design System em paralelo — uma v1 com breaking changes e uma linha legada — sem bloquear entregas."><meta property="og:title" content="Versionando um Design System em escala sem travar os times"><meta property="og:description" content="Como manter duas versões de um Design System em paralelo — uma v1 com breaking changes e uma linha legada — sem bloquear entregas."><meta property="og:type" content="website"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/_astro/BaseLayout.CKBxfJJy.css"><style>.prompt[data-astro-cid-4flseyhv]{font-family:var(--font-display);margin:0 0 1.2rem;font-weight:700}.post-head[data-astro-cid-4flseyhv]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.4rem}.meta[data-astro-cid-4flseyhv]{color:var(--text-faint);flex-wrap:wrap;align-items:center;gap:1rem;margin:0;font-size:.86rem;display:flex}.tags[data-astro-cid-4flseyhv]{gap:.8rem;display:flex}.tag[data-astro-cid-4flseyhv]{color:var(--teal)}.content[data-astro-cid-4flseyhv] h2{border-top:1px solid var(--border);padding-top:1.6em}.content[data-astro-cid-4flseyhv] a{color:var(--teal)}.content[data-astro-cid-4flseyhv] ul,.content[data-astro-cid-4flseyhv] ol{max-width:var(--measure)}.back[data-astro-cid-4flseyhv]{margin-top:3rem}.back[data-astro-cid-4flseyhv] a[data-astro-cid-4flseyhv]{color:var(--text-dim);font-family:var(--font-display);text-decoration:none}.back[data-astro-cid-4flseyhv] a[data-astro-cid-4flseyhv]:hover{color:var(--amber)}
+</style></head><body data-astro-cid-z4jru4n3><header class="site-header" data-astro-cid-z4jru4n3><div class="wrap header-inner" data-astro-cid-z4jru4n3><a href="/" class="brand" data-astro-cid-z4jru4n3>natazevedo<span class="cursor" aria-hidden="true" data-astro-cid-z4jru4n3></span></a><nav aria-label="Navegação principal" data-astro-cid-z4jru4n3><ul data-astro-cid-z4jru4n3><li data-astro-cid-z4jru4n3><a href="/" data-astro-cid-z4jru4n3>home</a></li><li data-astro-cid-z4jru4n3><a href="/blog/" data-astro-cid-z4jru4n3>posts</a></li><li data-astro-cid-z4jru4n3><a href="/servicos/" data-astro-cid-z4jru4n3>servicos</a></li><li data-astro-cid-z4jru4n3><a href="/sobre/" data-astro-cid-z4jru4n3>sobre</a></li></ul></nav></div></header><main class="wrap" data-astro-cid-z4jru4n3><article data-astro-cid-4flseyhv><p class="prompt" data-astro-cid-4flseyhv>cat versionando-design-system.md</p><header class="post-head" data-astro-cid-4flseyhv><h1 data-astro-cid-4flseyhv>Versionando um Design System em escala sem travar os times</h1><p class="meta" data-astro-cid-4flseyhv><time datetime="2026-09-12T00:00:00.000Z" data-astro-cid-4flseyhv>11 de setembro de 2026</time><span class="tags" data-astro-cid-4flseyhv><span class="tag" data-astro-cid-4flseyhv>#design-system</span><span class="tag" data-astro-cid-4flseyhv>#frontend</span><span class="tag" data-astro-cid-4flseyhv>#versionamento</span></span></p></header><div class="content" data-astro-cid-4flseyhv><p>É possível manter duas versões de um Design System em paralelo sem
+quebrar os times que dependem dele. Quando um DS evolui pra uma v1 com
+breaking changes — novos tokens, novas foundations, arquitetura diferente
+— nem todos os produtos vão conseguir migrar no mesmo ritmo. E tudo bem:
+o problema não é a velocidade diferente, é não ter um plano pra ela.</p>
+<h2 id="a-estrutura-de-branches">A estrutura de branches</h2>
+<p>Uma abordagem que funciona bem em times de plataforma é organizar duas
+linhas paralelas:</p>
+<p>main → v1.0.0, v1.0.1… (nova versão)
+release/0.x → 0.0.24, 0.0.25… (linha legada)</p>
+<p>Na prática:</p>
+<ul>
+<li>Crie a <code>release/0.x</code> antes de começar a trabalhar na v1</li>
+<li>Bugs críticos na versão antiga entram como fix direto na <code>release/0.x</code></li>
+<li>Novas features e evoluções de arquitetura só acontecem na v1</li>
+</ul>
+<h2 id="como-isso-aparece-no-registry">Como isso aparece no registry</h2>
+<p>@seu-ds/core
+├── 0.0.23
+├── 0.0.24 ← fix legado
+├── 1.0.0 ← nova arquitetura
+└── 1.0.1</p>
+<p>Cada produto migra quando estiver pronto — sem pressa, sem bloquear
+entregas, sem forçar um squad a absorver uma breaking change no meio de
+uma sprint que não tem espaço pra isso.</p>
+<h2 id="por-que-isso-é-diferente-de-só-seguir-semver">Por que isso é diferente de “só seguir semver”</h2>
+<p>Semver resolve o versionamento em teoria. O que resolve na prática é ter
+um processo definido pra decidir onde cada tipo de mudança entra — fix
+crítico na linha legada, evolução estrutural na nova — e comunicar isso
+com clareza pros times que consomem o pacote. Sem esse processo, versionar
+certo não impede que a migração vire um bloqueio de qualquer jeito.</p>
+</div></article><p class="back" data-astro-cid-4flseyhv><a href="/blog/" data-astro-cid-4flseyhv>cd ..</a></p></main><footer class="site-footer" data-astro-cid-z4jru4n3><div class="wrap" data-astro-cid-z4jru4n3><p class="prompt" data-astro-cid-z4jru4n3>exit <span class="text-faint" data-astro-cid-z4jru4n3>— Natália Azevedo, 2026</span></p></div></footer></body></html>

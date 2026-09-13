@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const formatted = post.data.date.toLocaleDateString('pt-BR', {
+  year: 'numeric', month: 'long', day: '2-digit',
+});
+---
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article>
+    <p class="prompt">cat {post.id}.md</p>
+    <header class="post-head">
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        <time datetime={post.data.date.toISOString()}>{formatted}</time>
+        {post.data.tags.length > 0 && (
+          <span class="tags">
+            {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+          </span>
+        )}
+      </p>
+    </header>
+    <div class="content">
+      <Content />
+    </div>
+  </article>
+  <p class="back"><a href="/blog/">cd ..</a></p>
+</BaseLayout>
+
+<style>
+  .prompt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin: 0 0 1.2rem;
+  }
+  .post-head { border-bottom: 1px solid var(--border); padding-bottom: 1.4rem; margin-bottom: 2rem; }
+  .meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    color: var(--text-faint);
+    font-size: 0.86rem;
+    margin: 0;
+  }
+  .tags { display: flex; gap: 0.8rem; }
+  .tag { color: var(--teal); }
+  .content :global(h2) { border-top: 1px solid var(--border); padding-top: 1.6em; }
+  .content :global(a) { color: var(--teal); }
+  .content :global(ul), .content :global(ol) { max-width: var(--measure); }
+  .back { margin-top: 3rem; }
+  .back a { color: var(--text-dim); text-decoration: none; font-family: var(--font-display); }
+  .back a:hover { color: var(--amber); }
+</style>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostRow from '../components/PostRow.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+<BaseLayout
+  title="Sobre"
+  description="Quem é Natália Azevedo."
+>
+  <p class="prompt">cat sobre.md</p>
+  <div class="content">
+    <p>
+      Sou Natália Azevedo, Staff Frontend Engineer com mais de 12 anos de
+      estrada. Atuo como contribuidora individual sênior — sem gestão
+      formal de pessoas, mas como referência técnica pra decisões de
+      arquitetura, microfrontends e design systems em ambientes de alta
+      escala.
+    </p>
+    <p>
+      Boa parte desse tempo foi construída em fintechs e plataformas de
+      ativos digitais — Mercado Pago, B3 Digitas — com React, TypeScript
+      e GraphQL como ferramentas principais. Fiz um MBA em Arquitetura de
+      Soluções pela FIAP, que formalizou o que eu já vinha fazendo na
+      prática: pensar em sistema, não só em tela.
+    </p>
+    <p>
+      Em paralelo, mantenho uma software house pequena, onde cuido de
+      implementações em N8N, landing pages e projetos sob demanda para
+      quem precisa de algo bem feito sem contratar um time inteiro.
+    </p>
+    <p>
+      Esse blog existe pra registrar o que aprendo no caminho — decisões
+      de arquitetura, ferramentas que valem a pena, e os bastidores de
+      rodar uma software house junto com um cargo CLT/PJ.
+    </p>
+
+    <h2>Passagens</h2>
+    <ul class="timeline">
+      <li><span class="role">Consultor de Engenharia de Software</span><span class="company">Vivo (Telefônica Brasil)</span><span class="period">2026 — atual</span></li>
+      <li><span class="role">Frontend Engineer Specialist</span><span class="company">Frota 162</span><span class="period">2025 — 2026</span></li>
+      <li><span class="role">Senior Frontend Engineer</span><span class="company">B3 Digitas</span><span class="period">2023 — 2025</span></li>
+      <li><span class="role">Frontend Software Engineer</span><span class="company">Mercado Pago</span><span class="period">2020 — 2023</span></li>
+    </ul>
+
+    <h2>Contato</h2>
+    <p>
+      <a href="mailto:contato@natazevedo.com.br">contato@natazevedo.com.br</a>
+    </p>
+    <p>
+      <a href="https://www.linkedin.com/in/natalia-deazevedo" target="_blank" rel="noopener noreferrer">linkedin.com/in/natalia-deazevedo</a>
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .prompt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin: 0 0 1.4rem;
+  }
+  .content h2 { border-top: 1px solid var(--border); padding-top: 1.4em; }
+  .timeline {
+    list-style: none;
+    margin: 0 0 1.6em;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.2rem 1rem;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .role {
+    font-family: var(--font-display);
+    color: var(--text);
+    font-size: 0.96rem;
+  }
+  .company {
+    grid-column: 1;
+    color: var(--teal);
+    font-size: 0.86rem;
+  }
+  .period {
+    grid-row: 1 / 3;
+    grid-column: 2;
+    align-self: center;
+    color: var(--text-faint);
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+</style>

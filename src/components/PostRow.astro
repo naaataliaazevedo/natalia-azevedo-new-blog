@@ -1,0 +1,61 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+}
+const { href, title, description, date, tags } = Astro.props;
+const formatted = date.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+---
+<article class="row">
+  <a href={href} class="row-title">{title}</a>
+  <time datetime={date.toISOString()} class="row-date">{formatted}</time>
+  <p class="row-desc">{description}</p>
+  {tags.length > 0 && (
+    <ul class="row-tags">
+      {tags.map((tag) => <li>#{tag}</li>)}
+    </ul>
+  )}
+</article>
+
+<style>
+  .row {
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 1rem;
+    align-items: baseline;
+  }
+  .row-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.02rem;
+  }
+  .row-title:hover { color: var(--amber); }
+  .row-date {
+    color: var(--text-faint);
+    font-size: 0.82rem;
+  }
+  .row-desc {
+    grid-column: 1 / -1;
+    color: var(--text-dim);
+    margin: 0.4rem 0 0.5rem;
+    max-width: 62ch;
+    font-size: 0.94rem;
+  }
+  .row-tags {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 0.9rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    color: var(--teal);
+  }
+</style>

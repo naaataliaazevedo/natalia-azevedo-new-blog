@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="404" description="Página não encontrada.">
+  <p class="prompt">cd {Astro.url.pathname}</p>
+  <p class="error">bash: cd: {Astro.url.pathname}: No such file or directory</p>
+  <p><a href="/">cd ~</a></p>
+</BaseLayout>
+
+<style>
+  .prompt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin: 0 0 0.8rem;
+  }
+  .error { color: var(--danger); margin-bottom: 2rem; }
+  a { font-family: var(--font-display); }
+</style>

@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="pt-BR" data-astro-cid-z4jru4n3><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fitness functions: transformando decisões de arquitetura em validação automática · natazevedo</title><meta name="description" content="Documentação, code review e alinhamento de time não escalam sozinhos em frontend enterprise. É aí que entram as fitness functions."><meta property="og:title" content="Fitness functions: transformando decisões de arquitetura em validação automática"><meta property="og:description" content="Documentação, code review e alinhamento de time não escalam sozinhos em frontend enterprise. É aí que entram as fitness functions."><meta property="og:type" content="website"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/_astro/BaseLayout.CKBxfJJy.css"><style>.prompt[data-astro-cid-4flseyhv]{font-family:var(--font-display);margin:0 0 1.2rem;font-weight:700}.post-head[data-astro-cid-4flseyhv]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.4rem}.meta[data-astro-cid-4flseyhv]{color:var(--text-faint);flex-wrap:wrap;align-items:center;gap:1rem;margin:0;font-size:.86rem;display:flex}.tags[data-astro-cid-4flseyhv]{gap:.8rem;display:flex}.tag[data-astro-cid-4flseyhv]{color:var(--teal)}.content[data-astro-cid-4flseyhv] h2{border-top:1px solid var(--border);padding-top:1.6em}.content[data-astro-cid-4flseyhv] a{color:var(--teal)}.content[data-astro-cid-4flseyhv] ul,.content[data-astro-cid-4flseyhv] ol{max-width:var(--measure)}.back[data-astro-cid-4flseyhv]{margin-top:3rem}.back[data-astro-cid-4flseyhv] a[data-astro-cid-4flseyhv]{color:var(--text-dim);font-family:var(--font-display);text-decoration:none}.back[data-astro-cid-4flseyhv] a[data-astro-cid-4flseyhv]:hover{color:var(--amber)}
+</style></head><body data-astro-cid-z4jru4n3><header class="site-header" data-astro-cid-z4jru4n3><div class="wrap header-inner" data-astro-cid-z4jru4n3><a href="/" class="brand" data-astro-cid-z4jru4n3>natazevedo<span class="cursor" aria-hidden="true" data-astro-cid-z4jru4n3></span></a><nav aria-label="Navegação principal" data-astro-cid-z4jru4n3><ul data-astro-cid-z4jru4n3><li data-astro-cid-z4jru4n3><a href="/" data-astro-cid-z4jru4n3>home</a></li><li data-astro-cid-z4jru4n3><a href="/blog/" data-astro-cid-z4jru4n3>posts</a></li><li data-astro-cid-z4jru4n3><a href="/servicos/" data-astro-cid-z4jru4n3>servicos</a></li><li data-astro-cid-z4jru4n3><a href="/sobre/" data-astro-cid-z4jru4n3>sobre</a></li></ul></nav></div></header><main class="wrap" data-astro-cid-z4jru4n3><article data-astro-cid-4flseyhv><p class="prompt" data-astro-cid-4flseyhv>cat fitness-functions-frontend.md</p><header class="post-head" data-astro-cid-4flseyhv><h1 data-astro-cid-4flseyhv>Fitness functions: transformando decisões de arquitetura em validação automática</h1><p class="meta" data-astro-cid-4flseyhv><time datetime="2026-09-13T00:00:00.000Z" data-astro-cid-4flseyhv>12 de setembro de 2026</time><span class="tags" data-astro-cid-4flseyhv><span class="tag" data-astro-cid-4flseyhv>#arquitetura</span><span class="tag" data-astro-cid-4flseyhv>#frontend</span><span class="tag" data-astro-cid-4flseyhv>#microfrontend</span></span></p></header><div class="content" data-astro-cid-4flseyhv><p>Muita gente acredita que o frontend se mantém saudável só com documentação,
+code review e alinhamento de time. Em projetos pequenos, funciona. Em
+projetos grandes, sozinho isso não escala.</p>
+<h2 id="o-que-aparece-conforme-o-projeto-cresce">O que aparece conforme o projeto cresce</h2>
+<p>Trabalhando em aplicações enterprise, os mesmos problemas voltam a aparecer
+conforme o sistema ganha escala:</p>
+<ul>
+<li>Imports indevidos entre domínios que deveriam estar isolados</li>
+<li>Acoplamento crescente entre módulos</li>
+<li>Design System sendo ignorado ou reimplementado localmente</li>
+<li>Bundle size crescendo sem ninguém monitorando</li>
+<li>Microfrontends virando spaghetti entre si</li>
+<li>Dependências espalhadas sem controle central</li>
+</ul>
+<p>Nenhum desses problemas nasce de má vontade — nasce de decisões de
+arquitetura que existem só como conhecimento tácito ou documentação que
+ninguém revisita.</p>
+<h2 id="a-ideia-por-trás-das-fitness-functions">A ideia por trás das fitness functions</h2>
+<p>A ideia é simples: transformar decisões arquiteturais em validações
+automáticas, em vez de depender de disciplina manual pra sustentá-las.</p>
+<p>Alguns exemplos práticos:</p>
+<ul>
+<li>Impedir dependências entre domínios que não deveriam se conhecer</li>
+<li>Limitar o tamanho do bundle por aplicação ou por módulo</li>
+<li>Validar os boundaries de cada microfrontend</li>
+<li>Garantir o uso correto do Design System em vez de componentes reinventados</li>
+<li>Detectar acoplamento excessivo entre partes do sistema</li>
+<li>Monitorar performance de forma contínua, não só em auditorias pontuais</li>
+</ul>
+<h2 id="ferramentas-que-ajudam">Ferramentas que ajudam</h2>
+<p>ESLint, Nx, Dependency Cruiser, Lighthouse CI e até testes customizados
+cobrem boa parte desse trabalho. Nenhuma delas substitui decisão de
+arquitetura — elas garantem que a decisão já tomada continue valendo
+conforme o time e o código crescem.</p>
+<h2 id="por-que-isso-importa">Por que isso importa</h2>
+<p>Fitness functions ajudam a preservar a saúde da arquitetura à medida que o
+frontend cresce, novos devs entram no time e múltiplos squads passam a
+atuar no mesmo ecossistema. Frontend enterprise sem esse tipo de
+governança eventualmente vira um multiverso de imports — e ninguém decide
+isso de propósito, simplesmente acontece quando nada verifica.</p>
+</div></article><p class="back" data-astro-cid-4flseyhv><a href="/blog/" data-astro-cid-4flseyhv>cd ..</a></p></main><footer class="site-footer" data-astro-cid-z4jru4n3><div class="wrap" data-astro-cid-z4jru4n3><p class="prompt" data-astro-cid-z4jru4n3>exit <span class="text-faint" data-astro-cid-z4jru4n3>— Natália Azevedo, 2026</span></p></div></footer></body></html>

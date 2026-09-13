@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Sobre"
+  description="Quem é Natália Azevedo."
+>
+  <p class="prompt">cat sobre.md</p>
+  <div class="content">
+    <p>
+      Sou Natália Azevedo, frontend sênior há cerca de 13 anos. Boa parte
+      do meu tempo hoje é dividida entre migrações de sistemas legados
+      para arquiteturas de micro-frontends, definição de padrões de
+      código, revisão e decisões de arquitetura em times de engenharia.
+    </p>
+    <p>
+      Em paralelo, mantenho uma software house pequena, onde cuido de
+      implementações em N8N, landing pages e projetos sob demanda para
+      quem precisa de algo bem feito sem contratar um time inteiro.
+    </p>
+    <p>
+      Esse blog existe pra registrar o que aprendo no caminho — decisões
+      de arquitetura, ferramentas que valem a pena, e os bastidores de
+      rodar uma software house junto com um cargo CLT/PJ.
+    </p>
+    <h2>Contato</h2>
+    <p>
+      <a href="mailto:contato@natazevedo.com.br">contato@natazevedo.com.br</a>
+    </p>
+    <p>
+      <a href="https://www.linkedin.com/in/natalia-deazevedo" target="_blank" rel="noopener noreferrer">linkedin.com/in/natalia-deazevedo</a>
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .prompt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin: 0 0 1.4rem;
+  }
+  .content h2 { border-top: 1px solid var(--border); padding-top: 1.4em; }
+</style>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostRow from '../../components/PostRow.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<BaseLayout title="Posts" description="Todos os posts do blog.">
+  <p class="prompt">ls posts/ -la</p>
+  {allPosts.length > 0 ? (
+    <div class="post-list">
+      {allPosts.map((post) => (
+        <PostRow
+          href={`/blog/${post.id}/`}
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          tags={post.data.tags}
+        />
+      ))}
+    </div>
+  ) : (
+    <p class="text-faint">// diretório vazio.</p>
+  )}
+</BaseLayout>
+
+<style>
+  .prompt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin: 0 0 1rem;
+  }
+  .post-list { border-top: 1px solid var(--border); }
+  .text-faint { color: var(--text-faint); }
+</style>
